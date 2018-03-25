@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>Generate [faicon]</title>
+    <style>
+        body {
+            font: 14px/18px -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+            padding: 1em;
+        }
+        .invisible {
+            display: none;
+        }
+
+        .faicon_box > i {
+            font-size: 2em;
+        }
+
+        #faicon_list {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .faicon_box {
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #fefaf0;
+        }
+    </style>
+</head>
+<body>
+<h2>Generate [faicon]</h2>
+<p><input type=search placeholder="検索" onkeyup="searchEmoji(this.value)"></p>
+<div id="faicon_list"></div>
+
+<!-- https://gist.github.com/zwinnie/3ed8e7970240962bc29227533c3ae047 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="fa.js"></script>
+<script>
+    function searchEmoji(query) {
+        var els = document.getElementsByClassName("faicon_box"), i = 0;
+        if (query) {
+            while (els[i]) {
+                els[i].classList.add("invisible");
+                i++;
+            }
+            json.filter(function(value, index, array) {
+                if (value.indexOf(query) !== -1) {
+                    els[index].className = "faicon_box";
+                }
+            });
+        } else {
+            while (els[i]) {
+                els[i].classList.remove("invisible");
+                i++;
+            }
+        }
+    }
+
+    function renderEmoji() {
+        var i = 0, reshtml = "", faicon = "";
+        while (json[i]) {
+            faicon = "[faicon]" + json[i].replace("fa-", "") + "[/faicon]";
+            reshtml += "<span class='faicon_box'><i class='fa fa-fw "+json[i]+"'></i>  <input type=text value='"+faicon+"' onfocus=this.select() readonly></span>\n";
+            i++;
+        }
+        document.getElementById("faicon_list").innerHTML = reshtml;
+    }
+
+    renderEmoji();
+</script>
+</body>
+</html>
